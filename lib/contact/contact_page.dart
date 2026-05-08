@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hadirkoe/requestdomicile/requestdomicile_page.dart';
-import 'package:hadirkoe/timezone/timezone_page.dart';
 import '../core/app_colors.dart';
-import '../changepassword/changepassword_page.dart';
-import '../contact/contact_page.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class ContactPage extends StatelessWidget {
+  const ContactPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,7 @@ class SettingsPage extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          "Settings",
+          "Contact Us",
           style: GoogleFonts.nunito(
             color: AppColors.profileHeaderRed,
             fontSize: 20,
@@ -35,61 +31,31 @@ class SettingsPage extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionTitle("Apps Settings"),
-              const SizedBox(height: 10),
-              _buildSettingsCard(
-                icon: Icons.lock_outline,
-                title: "Change Password",
-                subtitle: "Setting for change password",
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ChangePasswordPage()),
-                  );
-                },
-              ),
-              _buildSettingsCard(
-                icon: Icons.map_outlined,
-                title: "Time Zone",
-                subtitle: "Setting your time zone location",
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const TimeZonePage()),
-                  );
-                },
-              ),
-              _buildSettingsCard(
-                icon: Icons.home_work_outlined,
-                title: "Request Domicile",
-                subtitle: "Setting your location for WFH",
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const RequestDomicilePage()),
-                  );
-                },
-              ),
-
-              const SizedBox(height: 25),
-
-              _buildSectionTitle("Contact Us"),
-              const SizedBox(height: 10),
-              _buildSettingsCard(
+              _buildContactCard(
                 icon: Icons.phone_in_talk_outlined,
-                title: "Contact Us",
-                subtitle: "Contact us if you have questions",
+                title: "Phone",
+                subtitle: "Call us for service support",
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ContactPage()),
-                  );
+                  // Logic for phone dialer
                 },
               ),
-
-              const SizedBox(height: 40),
+              _buildContactCard(
+                icon: Icons.chat_outlined, // Placeholder for WhatsApp style
+                title: "WhatsApp",
+                subtitle: "Text us for service support",
+                onTap: () {
+                  // Logic for WhatsApp
+                },
+              ),
+              _buildContactCard(
+                icon: Icons.email_outlined,
+                title: "Email",
+                subtitle: "Tell us for service support",
+                onTap: () {
+                  // Logic for Email
+                },
+              ),
             ],
           ),
         ),
@@ -97,21 +63,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5),
-      child: Text(
-        title,
-        style: GoogleFonts.nunito(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: const Color(0xFF5D3E3E),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSettingsCard({
+  Widget _buildContactCard({
     required IconData icon,
     required String title,
     required String subtitle,
@@ -140,7 +92,7 @@ class SettingsPage extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
-                // Icon Container
+                // Icon Container - Styled to match SettingsPage
                 Container(
                   width: 50,
                   height: 50,
@@ -178,7 +130,6 @@ class SettingsPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Arrow Icon
                 Icon(
                   Icons.arrow_forward_ios_rounded,
                   color: AppColors.profileHeaderRed.withOpacity(0.5),
