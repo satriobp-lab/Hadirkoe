@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 import '../core/app_colors.dart';
 import '../menu/burger_menu_drawer.dart';
+import '../checkin/checkin_page.dart';
+import '../checkout/checkout_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -587,8 +589,34 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _buildGridContent() {
     final List<Map<String, dynamic>> menus = [
-      {"icon": Icons.access_time, "label": "Check-In", "shouldFlip": true, "bgColor": const Color(0xFFFFF1F1)},
-      {"icon": Icons.access_time, "label": "Check-Out", "shouldFlip": false, "bgColor": const Color(0xFFFFF1F1)},
+      {
+        "icon": Icons.access_time,
+        "label": "Check-In",
+        "shouldFlip": true,
+        "bgColor": const Color(0xFFFFF1F1),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const CheckInPage(),
+            ),
+          );
+        },
+      },
+      {
+        "icon": Icons.access_time,
+        "label": "Check-Out",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFFFF1F1),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const CheckOutPage(),
+            ),
+          );
+        },
+      },
       {"icon": Icons.history, "label": "Log", "shouldFlip": false, "bgColor": const Color(0xFFF1F7FF)},
       {"icon": Icons.groups_outlined, "label": "Team", "shouldFlip": false, "bgColor": const Color(0xFFF1F7FF)},
       {"icon": Icons.camera_front, "label": "Selfie", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
@@ -611,7 +639,9 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       itemCount: menus.length,
       itemBuilder: (context, index) {
-        return Column(
+        return GestureDetector(
+            onTap: menus[index]['onTap'],
+            child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
@@ -652,6 +682,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
             ),
           ],
+            ),
         );
       },
     );

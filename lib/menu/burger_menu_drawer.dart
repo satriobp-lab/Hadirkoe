@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hadirkoe/contact/contact_page.dart';
+import 'package:hadirkoe/offlinemode/offlinemode_page.dart';
 import '../profile/profile_page.dart';
 import '../settings/settings_page.dart';
 
@@ -43,7 +44,13 @@ class BurgerMenuDrawer extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const SettingsPage()),
                   );
                 }),
-                _buildMenuItem(Icons.wifi_off_outlined, "Offline Mode", () {}),
+                _buildMenuItem(Icons.wifi_off_outlined, "Offline Mode", () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OfflineModePage()),
+                  );
+                }),
                 _buildMenuItem(Icons.phone_outlined, "Contact Us", () {
                   Navigator.pop(context);
                   Navigator.push(

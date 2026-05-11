@@ -1,9 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key});
+
+  // PHONE CALL
+  Future<void> _launchPhone() async {
+    final Uri phoneUri = Uri.parse('tel:02129606330');
+
+    await launchUrl(phoneUri);
+  }
+
+  // WHATSAPP
+  Future<void> _launchWhatsApp() async {
+    final Uri whatsappUri =
+    Uri.parse('https://wa.me/6281386256461');
+
+    await launchUrl(
+      whatsappUri,
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
+  // EMAIL
+  Future<void> _launchEmail() async {
+    final Uri emailUri =
+    Uri.parse('mailto:callcenter@edi-indonesia.co.id');
+
+    await launchUrl(emailUri);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,25 +63,19 @@ class ContactPage extends StatelessWidget {
                 icon: Icons.phone_in_talk_outlined,
                 title: "Phone",
                 subtitle: "Call us for service support",
-                onTap: () {
-                  // Logic for phone dialer
-                },
+                onTap: _launchPhone,
               ),
               _buildContactCard(
                 icon: Icons.chat_outlined, // Placeholder for WhatsApp style
                 title: "WhatsApp",
                 subtitle: "Text us for service support",
-                onTap: () {
-                  // Logic for WhatsApp
-                },
+                onTap: _launchWhatsApp,
               ),
               _buildContactCard(
                 icon: Icons.email_outlined,
                 title: "Email",
                 subtitle: "Tell us for service support",
-                onTap: () {
-                  // Logic for Email
-                },
+                onTap: _launchEmail,
               ),
             ],
           ),

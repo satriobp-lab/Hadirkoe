@@ -120,10 +120,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Text(
                   "Profile",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.nunito(
                     color: Colors.white,
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
