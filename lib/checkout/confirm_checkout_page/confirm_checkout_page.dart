@@ -151,7 +151,7 @@ class _ConfirmCheckOutPageState extends State<ConfirmCheckOutPage> {
           "Confirm Check Out",
           style: GoogleFonts.nunito(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.w700,
           ),
         ),

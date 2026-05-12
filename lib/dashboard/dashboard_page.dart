@@ -1,11 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hadirkoe/log/log_page.dart';
+import 'package:hadirkoe/selfie/selfie_page.dart';
+import 'package:hadirkoe/team/team_page.dart';
 import 'dart:async';
 import '../core/app_colors.dart';
 import '../menu/burger_menu_drawer.dart';
 import '../checkin/checkin_page.dart';
 import '../checkout/checkout_page.dart';
+import '';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -617,9 +621,49 @@ class _DashboardPageState extends State<DashboardPage> {
           );
         },
       },
-      {"icon": Icons.history, "label": "Log", "shouldFlip": false, "bgColor": const Color(0xFFF1F7FF)},
-      {"icon": Icons.groups_outlined, "label": "Team", "shouldFlip": false, "bgColor": const Color(0xFFF1F7FF)},
-      {"icon": Icons.camera_front, "label": "Selfie", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
+      {
+        "icon": Icons.history,
+        "label": "Log",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFF1F7FF),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const LogPage(),
+            ),
+          );
+        },
+      },
+      {
+        "icon": Icons.groups_outlined,
+        "label": "Team",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFF1F7FF),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const TeamPage(),
+            ),
+          );
+        },
+      },
+      {
+        "icon": Icons.camera_front,
+        "label": "Selfie",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFF1FFF4),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const SelfiePage(),
+            ),
+          );
+        },
+      },
+      //{"icon": Icons.camera_front, "label": "Selfie", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
       {"icon": Icons.calendar_month_outlined, "label": "Presence", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
       {"icon": Icons.task_outlined, "label": "Activity", "shouldFlip": false, "bgColor": const Color(0xFFFFF9F1)},
       {"icon": Icons.assignment_outlined, "label": "Timesheet", "shouldFlip": false, "bgColor": const Color(0xFFFFF9F1)},
