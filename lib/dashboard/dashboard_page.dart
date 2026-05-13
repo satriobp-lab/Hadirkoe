@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hadirkoe/activity/activity_page.dart';
 import 'package:hadirkoe/log/log_page.dart';
+import 'package:hadirkoe/presence/presence_page.dart';
 import 'package:hadirkoe/selfie/selfie_page.dart';
 import 'package:hadirkoe/team/team_page.dart';
 import 'dart:async';
@@ -663,9 +665,37 @@ class _DashboardPageState extends State<DashboardPage> {
           );
         },
       },
+      {
+        "icon": Icons.calendar_month_outlined,
+        "label": "Presence",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFF1FFF4),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const PresencePage(),
+            ),
+          );
+        },
+      },
+      {
+        "icon": Icons.task_outlined,
+        "label": "Activity",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFFFF9F1),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const ActivityPage(),
+            ),
+          );
+        },
+      },
       //{"icon": Icons.camera_front, "label": "Selfie", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
-      {"icon": Icons.calendar_month_outlined, "label": "Presence", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
-      {"icon": Icons.task_outlined, "label": "Activity", "shouldFlip": false, "bgColor": const Color(0xFFFFF9F1)},
+      //{"icon": Icons.calendar_month_outlined, "label": "Presence", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
+      //{"icon": Icons.task_outlined, "label": "Activity", "shouldFlip": false, "bgColor": const Color(0xFFFFF9F1)},
       {"icon": Icons.assignment_outlined, "label": "Timesheet", "shouldFlip": false, "bgColor": const Color(0xFFFFF9F1)},
       {"icon": Icons.location_on_outlined, "label": "Site Visit", "shouldFlip": false, "bgColor": const Color(0xFFE8F5E9)},
       {"icon": Icons.more_horiz, "label": "More", "shouldFlip": false, "bgColor": const Color(0xFFF5F5F5)},
