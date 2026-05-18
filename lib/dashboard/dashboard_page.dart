@@ -1,17 +1,18 @@
 import 'dart:ui';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hadirkoe/activity/activity_page.dart';
 import 'package:hadirkoe/log/log_page.dart';
 import 'package:hadirkoe/presence/presence_page.dart';
 import 'package:hadirkoe/selfie/selfie_page.dart';
+import 'package:hadirkoe/sitevisit/sitevisit_page.dart';
 import 'package:hadirkoe/team/team_page.dart';
-import 'dart:async';
+import 'package:hadirkoe/timesheet/timesheet_page.dart';
 import '../core/app_colors.dart';
 import '../menu/burger_menu_drawer.dart';
 import '../checkin/checkin_page.dart';
 import '../checkout/checkout_page.dart';
-import '';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -57,6 +58,264 @@ class _DashboardPageState extends State<DashboardPage> {
     _timer.cancel();
     _bannerController.dispose();
     super.dispose();
+  }
+
+  // FUNGSIONAL: Menampilkan Bottom Sheet Menu "More" dengan tinggi pas sesuai jumlah item (fit content)
+  void _showMoreMenuBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Mengaktifkan kontrol ukuran penuh jika dibutuhkan
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withOpacity(0.4),
+      builder: (context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Color(0xFFFCFCFD), // Off-white modern background
+            borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // KUNCI UTAMA: Tinggi container menyesuaikan konten (tidak fix 75%)
+              children: [
+                // Drag Handle Indicator yang stylish
+                const SizedBox(height: 12),
+                Container(
+                  width: 50,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Header Permissions dengan desain minimalis
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Permissions",
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF422F35), // Dark rose brown
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          shape: BoxShape.circle,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                // Menu list yang dibungkus Flexible & SingleChildScrollView (aman untuk layar kecil agar tidak overflow)
+                Flexible(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min, // Menghindari ruang kosong di bawah
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // --- Section: Permissions ---
+                        _buildPermissionItem(
+                          title: "Permit",
+                          subtitle: "Submission for work permit.",
+                          icon: Icons.contact_mail_outlined,
+                          onTap: () {
+                            Navigator.pop(context);
+                            _showFeatureUnderDevelopmentSnackbar("Permit");
+                          },
+                        ),
+                        _buildPermissionItem(
+                          title: "Sick",
+                          subtitle: "Submission for work sick.",
+                          icon: Icons.sick_outlined,
+                          onTap: () {
+                            Navigator.pop(context);
+                            _showFeatureUnderDevelopmentSnackbar("Sick");
+                          },
+                        ),
+                        _buildPermissionItem(
+                          title: "Leave",
+                          subtitle: "Submission for work leave paid.",
+                          icon: Icons.front_hand_outlined,
+                          onTap: () {
+                            Navigator.pop(context);
+                            _showFeatureUnderDevelopmentSnackbar("Leave");
+                          },
+                        ),
+                        _buildPermissionItem(
+                          title: "Official Duty",
+                          subtitle: "Submission for work official duty.",
+                          icon: Icons.directions_car_outlined,
+                          onTap: () {
+                            Navigator.pop(context);
+                            _showFeatureUnderDevelopmentSnackbar("Official Duty");
+                          },
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // --- Section: Others Services ---
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          child: Text(
+                            "Others services",
+                            style: GoogleFonts.nunito(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF422F35),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+
+                        _buildPermissionItem(
+                          title: "Overtime",
+                          subtitle: "Submission for work overtime.",
+                          icon: Icons.more_time_rounded,
+                          onTap: () {
+                            Navigator.pop(context);
+                            _showFeatureUnderDevelopmentSnackbar("Overtime");
+                          },
+                        ),
+                        const SizedBox(height: 20), // Memberikan padding aman di bagian bawah
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // UI HELPER: Membuat Item Baris Menu di Bottom Sheet (Sangat Modern)
+  Widget _buildPermissionItem({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppColors.profileHeaderRed.withOpacity(0.06),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          )
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(20),
+          splashColor: AppColors.profileHeaderRed.withOpacity(0.05),
+          highlightColor: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                // Squircle Gradasi Modern untuk Wadah Ikon
+                Container(
+                  width: 58,
+                  height: 58,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColors.profileHeaderRed.withOpacity(0.08),
+                        AppColors.profileHeaderRed.withOpacity(0.01),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: AppColors.profileHeaderRed.withOpacity(0.12),
+                      width: 1.2,
+                    ),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: AppColors.profileHeaderRed,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 16),
+
+                // Deskripsi Menu Tengah
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: GoogleFonts.nunito(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF422F35),
+                          letterSpacing: -0.2,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.nunito(
+                          fontSize: 11,
+                          color: Colors.grey.shade500,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Trailing Chevron minimalis sebagai indikator klik
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade50,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.chevron_right_rounded,
+                    color: Colors.grey.shade400,
+                    size: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showFeatureUnderDevelopmentSnackbar(String featureName) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("$featureName submission feature is under development."),
+        backgroundColor: AppColors.profileHeaderRed,
+      ),
+    );
   }
 
   @override
@@ -210,36 +469,36 @@ class _DashboardPageState extends State<DashboardPage> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2), // Semi-transparent white
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.3),
-              width: 0.5,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2), // Semi-transparent white
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.3),
+                width: 0.5,
+              ),
             ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max, // 🔥 penting
-            children: [
-              if (icon != null) ...[
-                Icon(icon, color: Colors.white, size: 14),
-                const SizedBox(width: 6),
-              ],
-              Expanded( // 🔥 ini kunci
-                child: Text(
-                  text,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis, // 🔥 biar ga nabrak
-                  style: GoogleFonts.nunito(
-                    color: Colors.white,
-                    fontSize: 10.5,
-                    fontWeight: FontWeight.w600,
+            child: Row(
+              mainAxisSize: MainAxisSize.max, // 🔥 penting
+              children: [
+                if (icon != null) ...[
+                  Icon(icon, color: Colors.white, size: 14),
+                  const SizedBox(width: 6),
+                ],
+                Expanded( // 🔥 ini kunci
+                  child: Text(
+                    text,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis, // 🔥 biar ga nabrak
+                    style: GoogleFonts.nunito(
+                      color: Colors.white,
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          )
+              ],
+            )
         ),
       ),
     );
@@ -469,7 +728,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _buildCheckInOutSection() {
     return Transform.translate(
-        offset: Offset(0, -MediaQuery.of(context).size.height * 0.045),
+      offset: Offset(0, -MediaQuery.of(context).size.height * 0.045),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
@@ -693,12 +952,43 @@ class _DashboardPageState extends State<DashboardPage> {
           );
         },
       },
-      //{"icon": Icons.camera_front, "label": "Selfie", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
-      //{"icon": Icons.calendar_month_outlined, "label": "Presence", "shouldFlip": false, "bgColor": const Color(0xFFF1FFF4)},
-      //{"icon": Icons.task_outlined, "label": "Activity", "shouldFlip": false, "bgColor": const Color(0xFFFFF9F1)},
-      {"icon": Icons.assignment_outlined, "label": "Timesheet", "shouldFlip": false, "bgColor": const Color(0xFFFFF9F1)},
-      {"icon": Icons.location_on_outlined, "label": "Site Visit", "shouldFlip": false, "bgColor": const Color(0xFFE8F5E9)},
-      {"icon": Icons.more_horiz, "label": "More", "shouldFlip": false, "bgColor": const Color(0xFFF5F5F5)},
+      {
+        "icon": Icons.assignment_outlined,
+        "label": "Timesheet",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFFFF9F1),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const TimesheetPage(),
+            ),
+          );
+        },
+      },
+      {
+        "icon": Icons.location_on_outlined,
+        "label": "Site Visit",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFF5F5F5),
+        "onTap": () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const SiteVisitPage(),
+            ),
+          );
+        },
+      },
+      {
+        "icon": Icons.more_horiz,
+        "label": "More",
+        "shouldFlip": false,
+        "bgColor": const Color(0xFFF5F5F5),
+        "onTap": () {
+          _showMoreMenuBottomSheet(context); // FUNGSIONAL: Membuka bottom sheet panel More
+        },
+      },
     ];
 
     return GridView.builder(
@@ -714,49 +1004,49 @@ class _DashboardPageState extends State<DashboardPage> {
       itemCount: menus.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-            onTap: menus[index]['onTap'],
-            child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: menus[index]['bgColor'],
-                borderRadius: BorderRadius.circular(18),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.04),
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
-                  )
-                ],
-              ),
-              child: Transform(
-                alignment: Alignment.center,
-                transform: menus[index]['shouldFlip'] == true
-                    ? Matrix4.diagonal3Values(-1, 1, 1)
-                    : Matrix4.identity(),
-                child: Icon(
-                    menus[index]['icon'],
-                    color: AppColors.primaryRed,
-                    size: 26
+          onTap: menus[index]['onTap'],
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: menus[index]['bgColor'],
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
+                    )
+                  ],
+                ),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: menus[index]['shouldFlip'] == true
+                      ? Matrix4.diagonal3Values(-1, 1, 1)
+                      : Matrix4.identity(),
+                  child: Icon(
+                      menus[index]['icon'],
+                      color: AppColors.primaryRed,
+                      size: 26
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              menus[index]['label'],
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.nunito(
-                  fontSize: 10.5,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w600
+              const SizedBox(height: 8),
+              Text(
+                menus[index]['label'],
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.nunito(
+                    fontSize: 10.5,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w600
+                ),
               ),
-            ),
-          ],
-            ),
+            ],
+          ),
         );
       },
     );

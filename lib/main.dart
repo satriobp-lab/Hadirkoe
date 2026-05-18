@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hadirkoe/landing/landing_page.dart';
 import 'package:hadirkoe/core/app_colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Hide navigation bar only
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.manual,
+    overlays: [SystemUiOverlay.top], // status bar tetap muncul
+  );
+
   runApp(const HadirkoeApp());
 }
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hadirkoe/activity/locationactivity/locationactivity_page.dart';
 import 'package:intl/intl.dart';
 import '../core/app_colors.dart';
 import 'submitactivity/submitactivity_page.dart';
+import 'editactivity/editactivity_page.dart';
+import 'locationactivity/locationactivity_page.dart';
 
 class ActivityPage extends StatefulWidget {
   const ActivityPage({super.key});
@@ -434,38 +437,101 @@ class _ActivityPageState extends State<ActivityPage> {
             // Bottom Actions: Date, Location, Edit, Delete
             Row(
               children: [
-                const Icon(Icons.calendar_month_outlined, size: 20, color: Colors.grey),
+                const Icon(
+                  Icons.calendar_month_outlined,
+                  size: 20,
+                  color: Colors.grey,
+                ),
+
                 const SizedBox(width: 6),
-                Text(DateFormat('dd MMMM yyyy').format(data["timestamp"]),
-                    style: GoogleFonts.nunito(fontSize: 12, color: Colors.grey.shade600, fontWeight: FontWeight.bold)),
+
+                Text(
+                  DateFormat('dd MMMM yyyy').format(data["timestamp"]),
+                  style: GoogleFonts.nunito(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
 
                 const Spacer(),
 
-                // Action Icons
-                IconButton(
-                  onPressed: () {}, // Location action
-                  icon: const Icon(Icons.location_on_outlined, size: 22, color: Colors.grey),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                ),
-                const SizedBox(width: 15),
-                IconButton(
-                  onPressed: () {
-                    // Logic Edit (Icon Pen)
-                  },
-                  icon: const Icon(Icons.edit_outlined, size: 22, color: Colors.grey),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                ),
-                const SizedBox(width: 15),
-                IconButton(
-                  onPressed: () => _showDeleteConfirmation(data["id"]), // Logic Delete (Icon Trash)
-                  icon: const Icon(Icons.delete_outline_rounded, size: 22, color: Colors.grey),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      visualDensity: VisualDensity.compact,
+                      splashRadius: 18,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(
+                        minWidth: 28,
+                        minHeight: 28,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LocationActivityPage(
+                              activityData: data,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.location_on_outlined,
+                        size: 22,
+                        color: Colors.grey,
+                      ),
+                    ),
+
+                    const SizedBox(width: 2),
+
+                    IconButton(
+                      visualDensity: VisualDensity.compact,
+                      splashRadius: 18,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(
+                        minWidth: 28,
+                        minHeight: 28,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditActivityPage(
+                              activityData: data,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.edit_outlined,
+                        size: 22,
+                        color: Colors.grey,
+                      ),
+                    ),
+
+                    const SizedBox(width: 2),
+
+                    IconButton(
+                      visualDensity: VisualDensity.compact,
+                      splashRadius: 18,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(
+                        minWidth: 28,
+                        minHeight: 28,
+                      ),
+                      onPressed: () => _showDeleteConfirmation(data["id"]),
+                      icon: const Icon(
+                        Icons.delete_outline_rounded,
+                        size: 22,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
