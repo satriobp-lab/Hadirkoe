@@ -13,6 +13,7 @@ import '../core/app_colors.dart';
 import '../menu/burger_menu_drawer.dart';
 import '../checkin/checkin_page.dart';
 import '../checkout/checkout_page.dart';
+import 'package:hadirkoe/more/permit/permit_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -129,8 +130,13 @@ class _DashboardPageState extends State<DashboardPage> {
                           subtitle: "Submission for work permit.",
                           icon: Icons.contact_mail_outlined,
                           onTap: () {
-                            Navigator.pop(context);
-                            _showFeatureUnderDevelopmentSnackbar("Permit");
+                            Navigator.pop(context); // Menutup bottom sheet terlebih dahulu
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const PermitPage(), // Berpindah ke halaman PermitPage di Canvas
+                              ),
+                            );
                           },
                         ),
                         _buildPermissionItem(
