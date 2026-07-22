@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hadirkoe/activity/activity_page.dart';
 import 'package:hadirkoe/log/log_page.dart';
+import 'package:hadirkoe/more/officialduty/officialduty_page.dart';
+import 'package:hadirkoe/more/overtime/overtime_page.dart';
 import 'package:hadirkoe/presence/presence_page.dart';
 import 'package:hadirkoe/selfie/selfie_page.dart';
 import 'package:hadirkoe/sitevisit/sitevisit_page.dart';
@@ -14,6 +16,8 @@ import '../menu/burger_menu_drawer.dart';
 import '../checkin/checkin_page.dart';
 import '../checkout/checkout_page.dart';
 import 'package:hadirkoe/more/permit/permit_page.dart';
+import 'package:hadirkoe/more/sick/sick_page.dart';
+import 'package:hadirkoe/more/leave/leave_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -145,7 +149,12 @@ class _DashboardPageState extends State<DashboardPage> {
                           icon: Icons.sick_outlined,
                           onTap: () {
                             Navigator.pop(context);
-                            _showFeatureUnderDevelopmentSnackbar("Sick");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const SickPage(),
+                              ),
+                            );
                           },
                         ),
                         _buildPermissionItem(
@@ -154,7 +163,12 @@ class _DashboardPageState extends State<DashboardPage> {
                           icon: Icons.front_hand_outlined,
                           onTap: () {
                             Navigator.pop(context);
-                            _showFeatureUnderDevelopmentSnackbar("Leave");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const LeavePage(),
+                              ),
+                            );
                           },
                         ),
                         _buildPermissionItem(
@@ -163,7 +177,12 @@ class _DashboardPageState extends State<DashboardPage> {
                           icon: Icons.directions_car_outlined,
                           onTap: () {
                             Navigator.pop(context);
-                            _showFeatureUnderDevelopmentSnackbar("Official Duty");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const OfficialDutyPage(),
+                              ),
+                            );
                           },
                         ),
 
@@ -189,7 +208,12 @@ class _DashboardPageState extends State<DashboardPage> {
                           icon: Icons.more_time_rounded,
                           onTap: () {
                             Navigator.pop(context);
-                            _showFeatureUnderDevelopmentSnackbar("Overtime");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const OvertimePage(),
+                              ),
+                            );
                           },
                         ),
                         const SizedBox(height: 20), // Memberikan padding aman di bagian bawah
